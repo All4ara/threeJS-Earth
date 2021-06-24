@@ -72,6 +72,17 @@ const pointLight = new THREE.PointLight(0xffffff, 1);
 pointLight.position.set(5, 3, 5);
 scene.add(pointLight)
 
+const Helper = new THREE.PointLightHelper(pointLight);
+scene.add(Helper);
+
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    render();
+}, false);
+
 const animate = () => {
     requestAnimationFrame(animate);
     earthMesh.rotation.y -= 0.0015;
