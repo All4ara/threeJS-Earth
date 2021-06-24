@@ -30,12 +30,16 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.autoClear = false;
 renderer.setClearColor(0x000000, 0.0);
 
+const controls = new OrbitControls(camera, renderer.domElement);
+
 const earthGeometry = new THREE.SphereGeometry(0.6, 32, 32);
 
 const earthMaterial = new THREE.MeshPhongMaterial({
     roughness: 1,
     metalness: 0,
-    map : THREE.ImageUtils.loadTexture('texture/earthmap1k.jpeg')
+    map : THREE.ImageUtils.loadTexture('texture/earthmap1k.jpeg'),
+    bumpMap : THREE.ImageUtils.loadTexture('texture/earthbump.jpeg'),
+    bumpScale: 0.5,
 });
 
 const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -51,6 +55,7 @@ scene.add(pointLight)
 const animate = () => {
     requestAnimationFrame(animate);
     earthMesh.rotation.y -= 0.0015;
+    controls.update();
     render();
 }
 
