@@ -35,6 +35,7 @@ const earthGeometry = new THREE.SphereGeometry(0.6, 32, 32);
 const earthMaterial = new THREE.MeshPhongMaterial({
     roughness: 1,
     metalness: 0,
+    map : THREE.ImageUtils.loadTexture('texture/earthmap1k.jpeg')
 });
 
 const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -47,5 +48,14 @@ const pointLight = new THREE.PointLight(0xffffff, 1);
 pointLight.position.set(5, 3, 5);
 scene.add(pointLight)
 
+const animate = () => {
+    requestAnimationFrame(animate);
+    earthMesh.rotation.y -= 0.0015;
+    render();
+}
 
-renderer.render(scene, camera);
+const render = () => {
+    renderer.render(scene, camera);
+}
+
+animate();
