@@ -26,8 +26,26 @@ renderer = new THREE.WebGLRenderer({
     antialias: true
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixalRatio(window.devicePixelRatio);
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.autoClear = false;
 renderer.setClearColor(0x000000, 0.0);
 
-renderer.render(scene, camera)
+const earthGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+
+const earthMaterial = new THREE.MeshPhongMaterial({
+    roughness: 1,
+    metalness: 0,
+});
+
+const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
+scene.add(earthMesh);
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(5, 3, 5);
+scene.add(pointLight)
+
+
+renderer.render(scene, camera);
