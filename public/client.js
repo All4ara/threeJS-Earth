@@ -45,6 +45,26 @@ const earthMaterial = new THREE.MeshPhongMaterial({
 const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
 scene.add(earthMesh);
 
+const cloudGeometry = new THREE.SphereGeometry(0.63, 32, 32);
+
+const cloudMaterial = new THREE.MeshPhongMaterial({
+    map: THREE.ImageUtils.loadTexture('texture/earthCloud.png'),
+    transparent:  true
+});
+
+const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+scene.add(cloudMesh);
+
+const starGeomerty = new THREE.SphereGeometry(80,64,64);
+
+const starMaterial = new THREE.MeshBasicMaterial({
+    map: THREE.ImageUtils.loadTexture('texture/galaxy.png'),
+    side: THREE.BackSide,
+});
+
+const starMesh = new THREE.Mesh(starGeomerty, starMaterial);
+scene.add(starMesh);
+
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 scene.add(ambientLight);
 
@@ -55,6 +75,8 @@ scene.add(pointLight)
 const animate = () => {
     requestAnimationFrame(animate);
     earthMesh.rotation.y -= 0.0015;
+    cloudMesh.rotation.y -= 0.001;
+    starMesh.rotation.y -= 0.002
     controls.update();
     render();
 }
