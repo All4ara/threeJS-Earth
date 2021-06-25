@@ -32,7 +32,7 @@ renderer.setClearColor(0x000000, 0.0);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-const earthGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+const earthGeometry = new THREE.SphereGeometry(5, 32, 32);
 
 const earthMaterial = new THREE.MeshPhongMaterial({
     roughness: 1,
@@ -45,7 +45,7 @@ const earthMaterial = new THREE.MeshPhongMaterial({
 const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
 scene.add(earthMesh);
 
-const cloudGeometry = new THREE.SphereGeometry(0.63, 32, 32);
+const cloudGeometry = new THREE.SphereGeometry(5.03, 32, 32);
 
 const cloudMaterial = new THREE.MeshPhongMaterial({
     map: THREE.ImageUtils.loadTexture('texture/earthCloud.png'),
@@ -55,7 +55,7 @@ const cloudMaterial = new THREE.MeshPhongMaterial({
 const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
 scene.add(cloudMesh);
 
-const starGeomerty = new THREE.SphereGeometry(80,64,64);
+const starGeomerty = new THREE.SphereGeometry(200,64,64);
 
 const starMaterial = new THREE.MeshBasicMaterial({
     map: THREE.ImageUtils.loadTexture('texture/galaxy.png'),
@@ -75,6 +75,31 @@ scene.add(pointLight)
 const Helper = new THREE.PointLightHelper(pointLight);
 scene.add(Helper);
 
+//////////////////Moon
+
+var r = 35;
+var theta = 0;
+var dTheta = 2 * Math.PI / 200;
+
+
+const moonGeometry = new THREE.SphereGeometry(3, 50, 50);
+
+const moonMaterial = new THREE.MeshPhongMaterial({
+    roughness: 1,
+    metalness: 0,
+    map : THREE.ImageUtils.loadTexture('texture/moon1k.jpeg'),
+    bumpMap : THREE.ImageUtils.loadTexture('texture/moonBump.jpeg'),
+    bumpScale: 0.5,
+});
+
+const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
+moonMesh.position.set(35,0,0)
+scene.add(moonMesh);
+
+///////////Camera Scene
+
+
+
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -88,6 +113,9 @@ const animate = () => {
     earthMesh.rotation.y -= 0.0015;
     cloudMesh.rotation.y -= 0.001;
     starMesh.rotation.y -= 0.002
+    theta += dTheta;
+    moonMesh.position.x = r * Math.cos(theta);
+    moonMesh.position.z = r * Math.sin(theta);
     controls.update();
     render();
 }
