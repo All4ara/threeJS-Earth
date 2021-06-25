@@ -18,7 +18,7 @@ const near = 0.1;
 const far = 1000;
 
 camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-camera.position.z = 2;
+camera.position.z = 50;
 scene.add(camera);
 
 renderer = new THREE.WebGLRenderer({
@@ -69,7 +69,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 scene.add(ambientLight);
 
 const pointLight = new THREE.PointLight(0xffffff, 1);
-pointLight.position.set(5, 3, 5);
+pointLight.position.set(200, 3, 5);
 scene.add(pointLight)
 
 const Helper = new THREE.PointLightHelper(pointLight);
@@ -79,7 +79,7 @@ scene.add(Helper);
 
 var r = 35;
 var theta = 0;
-var dTheta = 2 * Math.PI / 200;
+var dTheta = 2 * Math.PI / 1500;
 
 
 const moonGeometry = new THREE.SphereGeometry(3, 50, 50);
@@ -97,6 +97,12 @@ moonMesh.position.set(35,0,0)
 scene.add(moonMesh);
 
 ///////////Camera Scene
+var earthVec = new THREE.Vector3(0,0,0);
+
+var dx = .01;
+var dy = -.01;
+var dz = -.05;
+
 
 
 
@@ -116,6 +122,19 @@ const animate = () => {
     theta += dTheta;
     moonMesh.position.x = r * Math.cos(theta);
     moonMesh.position.z = r * Math.sin(theta);
+
+    //Update the camera position
+    camera.position.x += dx;
+    camera.position.y += dy;
+    camera.position.z += dz;
+
+    //Flyby reset
+    if (camera.position.z < -100) {
+        camera.position.set(0,35,70);
+    }
+
+    //Point the camera towards the earth
+    camera.lookAt(earthVec);
     controls.update();
     render();
 }
