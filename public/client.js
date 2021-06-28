@@ -82,7 +82,7 @@ var theta = 0;
 var dTheta = 2 * Math.PI / 1500;
 
 
-const moonGeometry = new THREE.SphereGeometry(3, 50, 50);
+const moonGeometry = new THREE.SphereGeometry(2.4, 40, 40);
 
 const moonMaterial = new THREE.MeshPhongMaterial({
     roughness: 1,
@@ -124,17 +124,17 @@ const animate = () => {
     moonMesh.position.z = r * Math.sin(theta);
 
     //Update the camera position
-    camera.position.x += dx;
-    camera.position.y += dy;
-    camera.position.z += dz;
+    // camera.position.x += dx;
+    // camera.position.y += dy;
+    // camera.position.z += dz;
 
     //Flyby reset
-    if (camera.position.z < -100) {
-        camera.position.set(0,35,70);
-    }
+    // if (camera.position.z < -100) {
+    //     camera.position.set(0,35,70);
+    // }
 
     //Point the camera towards the earth
-    camera.lookAt(earthVec);
+    // camera.lookAt(earthVec);
     controls.update();
     render();
 }
